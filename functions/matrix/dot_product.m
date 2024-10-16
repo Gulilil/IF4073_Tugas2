@@ -1,6 +1,8 @@
 function result = dot_product(mat1, mat2)
     [row1, col1] = size(mat1);
     [row2, col2] = size(mat2);
+    mat1 = double(mat1);
+    mat2 = double(mat2);
     result = 0;
     if (not (row1 == row2) || not (col1 == col2) )
         disp("Both matrix is not equal in shape!");

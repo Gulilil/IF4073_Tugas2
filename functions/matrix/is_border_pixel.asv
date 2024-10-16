@@ -1,9 +1,0 @@
-function result = is_border_pixel(mat, r, c, pixel_border)
-    [row, col] = size(mat);
-    if (r <= pixel_border || r >= row+1-pixel_border || c <= pixel_border || c >= col+1-pixel_border)
-        result = true;
-    else
-        result = false;
-    end
-end
-

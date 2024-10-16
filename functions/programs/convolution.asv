@@ -26,7 +26,7 @@ function result_img = convolution(img, is_grayscaled)
 
     % Create image
     checkpoint = 0;
-    batch_percentage = 10;
+    
     for r=1:row
         for c =1:col
             if (is_gray)
@@ -65,8 +65,8 @@ function result_img = convolution(img, is_grayscaled)
 
             end
         end
-        if (mod(r, round(row /batch_percentage)) == 0)
-           checkpoint = checkpoint + (100/batch_percentage);
+        if (mod(r, round(row /10)) == 0)
+           checkpoint = checkpoint + 10;
            fprintf("[CHECKPOINT] Checkpoint of Convolution process: %d%%\n", checkpoint);
         end
     end
