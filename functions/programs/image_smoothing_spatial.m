@@ -14,10 +14,6 @@ function imgMeanFiltered = image_smoothing_spatial(img, spatialType)
     % Add Gaussian noise to the image
     imgWithNoise = imnoise(img, 'gaussian', 0.1);
     
-    % Display the noisy image
-    figure; imshow(imgWithNoise);
-    title('Image with Noise');
-    
     % Apply Mean filter using convolution
     if spatialType == "Mean"
         imgMeanFiltered = convolution(double(imgWithNoise), false, "mean", nMask);
@@ -25,8 +21,14 @@ function imgMeanFiltered = image_smoothing_spatial(img, spatialType)
         imgMeanFiltered = convolution(double(imgWithNoise), false, "gaussian", nMask);
     end
     
-    % Display the filtered image
-    figure; imshow(imgMeanFiltered);
+    % Display both images (noisy and filtered) side by side using subplot
+    figure;
+    subplot(1, 2, 1);
+    imshow(imgWithNoise);
+    title('Image with Noise');
+    
+    subplot(1, 2, 2);
+    imshow(imgMeanFiltered);
     if spatialType == "Mean"
         title('Image after Mean Filter Smoothing');
     elseif spatialType == "Gaussian"
