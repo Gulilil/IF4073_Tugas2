@@ -18,7 +18,7 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
     % Initialize the padded image
     if numChannels == 1
         % For grayscale images
-        pad = padarray(f, [M N], 0, 'post');
+        pad = padarray(img, [M N], 0, 'post');
     else
         % For RGB images, pad each channel separately
         pad = zeros(P, Q, 3);
@@ -36,10 +36,10 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
     % Display the Fourier Spectrum
     subplot(2, 3, 3); imshow(fourierDisplay, []); title('Fourier Spectrum');
     
-    % Step 3: Create an Lowpass Filter based on condition
-    meshArrays = lowpass_filter_processing(frequencyType, P, Q, cutoffFrequency);
+    % Step 3: Create an Filter based on condition
+    meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency);
     
-    % Display the Lowpass Filter
+    % Display the Filter
     subplot(2, 3, 4); imshow(meshArrays, []); 
     if frequencyType == "ILPF"
         title('Ideal Lowpass Filter Mask');
@@ -47,6 +47,12 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
         title('Gaussian Lowpass Filter Mask');
     elseif frequencyType == "BLPF"
         title('Butterworth Lowpass Filter Mask');
+    elseif frequencyType == "IHPF"
+        title('Ideal Highpass Filter Mask');
+    elseif frequencyType == "GHPF"
+        title('Gaussian Highpass Filter Mask');
+    elseif frequencyType == "BHPF"
+        title('Butterworth Highpass Filter Mask');
     end
 
     subplot(2, 3, 5); mesh(meshArrays); 
@@ -56,6 +62,12 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
         title('3D View of GLPF Mask');
     elseif frequencyType == "BLPF"
         title('3D View of BLPF Mask');
+    elseif frequencyType == "IHPF"
+        title('3D View of IHPF Mask');
+    elseif frequencyType == "GHPF"
+        title('3D View of GHPF Mask');
+    elseif frequencyType == "BHPF"
+        title('3D View of BHPF Mask');
     end
     
     % Step 4: Apply the filter to the Fourier-transformed image
