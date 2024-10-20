@@ -5,18 +5,19 @@ addpath("functions\img\")
 addpath("functions\utils\")
 
 % Load the image
-img = imread('img_in\camera.bmp');
+img = imread('img_in\flower.png');
 
 % Proses Image Smoothing dengan ranah spasial
 fprintf("Image Smoothing dengan memanfaatkan ranah frekuensi\n")
 fprintf("Pilih jenis ranah frekuensi:\n")
 fprintf("1. Low-Pass Filter\n")
 fprintf("2. High-Pass Filter\n")
+fprintf("3. Homomorphic Filter\n")
 fprintf("\n")
-selectedFrequencies = input("Masukkan pilihan (1/2): ");
-while selectedFrequencies ~= 1 && selectedFrequencies ~= 2
+selectedFrequencies = input("Masukkan pilihan (1/2/3): ");
+while selectedFrequencies ~= 1 && selectedFrequencies ~= 2 && selectedFrequencies ~= 3
     fprintf("Pilihan tidak valid\n")
-    selectedFilter = input("Masukkan pilihan (1/2): ");
+    selectedFilter = input("Masukkan pilihan (1/2/3): ");
 end
 
 if selectedFrequencies == 1
@@ -65,6 +66,9 @@ elseif selectedFrequencies == 2
     else
         fprintf("Pilihan tidak valid\n");
     end
+elseif selectedFrequencies == 3
+    cutoffFrequency = input("Masukkan nilai Cut-Off Frequency: ");
+    image_smoothing_frequency(img, "Homomorphic", cutoffFrequency);
 else
     fprintf("Pilihan tidak valid\n");
 end

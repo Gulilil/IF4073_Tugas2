@@ -28,6 +28,10 @@ function meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency)
     elseif frequencyType == "BHPF"
         n = 2; % Order of Butterworth filter
         meshArrays = 1 ./ (1 + (cutoffFrequency ./ euclidean).^(2 * n)); % Butterworth Highpass Filter mask
+    elseif frequencyType == "Homomorphic"
+        gammaL = 2; % Lower gamma value
+        gammaH = 4; % Higher gamma value
+        meshArrays = (gammaH - gammaL) * (1 - exp(-(euclidean.^2) ./ (2 * (cutoffFrequency^2)))) + gammaL; % Homomorphic Filter mask
     else
         fprintf("Invalid frequency type\n");
     end

@@ -53,6 +53,8 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
         title('Gaussian Highpass Filter Mask');
     elseif frequencyType == "BHPF"
         title('Butterworth Highpass Filter Mask');
+    elseif frequencyType == "Homomorphic"
+        title('Homomorphic Filter Mask');
     end
 
     subplot(2, 3, 5); mesh(meshArrays); 
@@ -68,6 +70,8 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
         title('3D View of GHPF Mask');
     elseif frequencyType == "BHPF"
         title('3D View of BHPF Mask');
+    elseif frequencyType == "Homomorphic"
+        title('3D View of Homomorphic Mask');
     end
     
     % Step 4: Apply the filter to the Fourier-transformed image
