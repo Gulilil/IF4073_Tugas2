@@ -1,6 +1,4 @@
 function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFrequency)
-    % frequencyType = ['ILPF', 'GLPF', 'BLPF', 'IHPF', 'GHPF', 'BHPF', 'Homomorphic']
-
     img = im2double(img); % Convert to double
     [M, N, numChannels] = size(img); % Get the size and number of channels of the original image
     
@@ -43,38 +41,38 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
     
     % % Display the Filter
     % subplot(2, 3, 4); imshow(meshArrays, []); 
-    % if frequencyType == "ILPF"
-    %     title('Ideal Lowpass Filter Mask');
-    % elseif frequencyType == "GLPF"
-    %     title('Gaussian Lowpass Filter Mask');
-    % elseif frequencyType == "BLPF"
-    %     title('Butterworth Lowpass Filter Mask');
-    % elseif frequencyType == "IHPF"
-    %     title('Ideal Highpass Filter Mask');
-    % elseif frequencyType == "GHPF"
-    %     title('Gaussian Highpass Filter Mask');
-    % elseif frequencyType == "BHPF"
-    %     title('Butterworth Highpass Filter Mask');
-    % elseif frequencyType == "Homomorphic"
-    %     title('Homomorphic Filter Mask');
-    % end
-    % 
-    % subplot(2, 3, 5); mesh(meshArrays); 
-    % if frequencyType == "ILPF"
-    %     title('3D View of ILPF Mask');
-    % elseif frequencyType == "GLPF"
-    %     title('3D View of GLPF Mask');
-    % elseif frequencyType == "BLPF"
-    %     title('3D View of BLPF Mask');
-    % elseif frequencyType == "IHPF"
-    %     title('3D View of IHPF Mask');
-    % elseif frequencyType == "GHPF"
-    %     title('3D View of GHPF Mask');
-    % elseif frequencyType == "BHPF"
-    %     title('3D View of BHPF Mask');
-    % elseif frequencyType == "Homomorphic"
-    %     title('3D View of Homomorphic Mask');
-    % end
+    if frequencyType == "ILPF"
+        title('Ideal Lowpass Filter Mask');
+    elseif frequencyType == "GLPF"
+        title('Gaussian Lowpass Filter Mask');
+    elseif frequencyType == "BLPF"
+        title('Butterworth Lowpass Filter Mask');
+    elseif frequencyType == "IHPF"
+        title('Ideal Highpass Filter Mask');
+    elseif frequencyType == "GHPF"
+        title('Gaussian Highpass Filter Mask');
+    elseif frequencyType == "BHPF"
+        title('Butterworth Highpass Filter Mask');
+    elseif frequencyType == "Homomorphic"
+        title('Homomorphic Filter Mask');
+    end
+
+    subplot(2, 3, 5); mesh(meshArrays); 
+    if frequencyType == "ILPF"
+        title('3D View of ILPF Mask');
+    elseif frequencyType == "GLPF"
+        title('3D View of GLPF Mask');
+    elseif frequencyType == "BLPF"
+        title('3D View of BLPF Mask');
+    elseif frequencyType == "IHPF"
+        title('3D View of IHPF Mask');
+    elseif frequencyType == "GHPF"
+        title('3D View of GHPF Mask');
+    elseif frequencyType == "BHPF"
+        title('3D View of BHPF Mask');
+    elseif frequencyType == "Homomorphic"
+        title('3D View of Homomorphic Mask');
+    end
     
     % Step 4: Apply the filter to the Fourier-transformed image
     if numChannels == 1
@@ -113,5 +111,5 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
         image_result = image_result(1:M, 1:N, :);
     end
     
-    % % Display the Final Output Image (Cropped to Original Size)
-    % subplot(2, 3, 6); imshow(image_result, []); title('Final Output Image');
+    % Display the Final Output Image (Cropped to Original Size)
+    subplot(2, 3, 6); imshow(image_result, []); title('Final Output Image');
