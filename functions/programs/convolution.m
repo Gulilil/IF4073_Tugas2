@@ -8,8 +8,6 @@ function result_img = convolution(img, mask, n_mask)
     %     nMask = 0; % Default mask size, for example a 3x3 mask
     % end
     % 
-    % [row, col, num_channels] = size(img);
-    % 
     % % Insert the mask matrix
     % if strcmp(typeMask, 'readFile')
     %     [mask, n_mask] = read_mask();
@@ -22,9 +20,11 @@ function result_img = convolution(img, mask, n_mask)
     %     fprintf("Invalid mask type!\n");
     %     return;
     % end
+
+    [row, col, num_channels] = size(img);
     
     pixel_border = floor(n_mask/2);   
-    sum_mask = sum(mask(:));
+    sum_mask = sum_mat(mask);
 
     % Img details
     fprintf("[INFO] An image size [%d, %d] is inputted!\n", row, col);
