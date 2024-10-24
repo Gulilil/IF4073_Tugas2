@@ -3,16 +3,7 @@ function image_result =  image_smoothing_frequency(img, frequencyType, cutoffFre
 
     img = im2double(img); % Convert to double
     [M, N, numChannels] = size(img); % Get the size and number of channels of the original image
-    
-    % figure;
-    % if numChannels == 1
-    %     % Grayscale image
-    %     subplot(2, 3, 1); imshow(img); title('Original Grayscale Image');
-    % else
-    %     % RGB image
-    %     subplot(2, 3, 1); imshow(img); title('Original RGB Image');
-    % end
-    
+
     % Step 1: Define padding parameters (P = 2M and Q = 2N)
     P = 2 * M;
     Q = 2 * N;
