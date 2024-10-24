@@ -23,11 +23,7 @@ function imgMeanFiltered = image_smoothing_spatial(img, spatialType, nMask, sigm
         
         % Add noise to the image
         imgWithNoise = inputImage + mean + noise;  % Add mean and noise
-        % % Need Image Processing Toolbox
-        % imgWithNoise = im2uint8(noisyImage);  % Convert back to uint8 if necessary
-        imgWithNoise = min(max(imgWithNoise, 0), 1);
-        imgWithNoise = uint8(imgWithNoise * 255);
-
+        %imgWithNoise = im2uint8(noisyImage);  % Convert back to uint8 if necessary
         
         % Apply Mean filter using convolution
         if spatialType == "Mean"
