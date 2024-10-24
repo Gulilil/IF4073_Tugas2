@@ -1,27 +1,27 @@
-function result_img = convolution(img, is_grayscaled, typeMask, nMask)
-    % Set default values for optional parameters
-    if nargin < 3 || isempty(typeMask)
-        typeMask = 'readFile'; % Set a default mask type
-    end
-    
-    if nargin < 4 || isempty(nMask)
-        nMask = 0; % Default mask size, for example a 3x3 mask
-    end
-    
-    [row, col, num_channels] = size(img);
-
-    % Insert the mask matrix
-    if strcmp(typeMask, 'readFile')
-        [mask, n_mask] = read_mask();
-    elseif strcmp(typeMask, 'mean')
-        [mask, n_mask] = generate_mean_matrix(nMask);
-    elseif strcmp(typeMask, 'gaussian')
-        sigma = input("Masukkan nilai standar deviasi: ");
-        [mask, n_mask] = generate_gaussian_matrix(nMask, sigma);
-    else
-        fprintf("Invalid mask type!\n");
-        return;
-    end
+function result_img = convolution(img, mask, n_mask)
+    % % Set default values for optional parameters
+    % if nargin < 3 || isempty(typeMask)
+    %     typeMask = 'readFile'; % Set a default mask type
+    % end
+    % 
+    % if nargin < 4 || isempty(nMask)
+    %     nMask = 0; % Default mask size, for example a 3x3 mask
+    % end
+    % 
+    % [row, col, num_channels] = size(img);
+    % 
+    % % Insert the mask matrix
+    % if strcmp(typeMask, 'readFile')
+    %     [mask, n_mask] = read_mask();
+    % elseif strcmp(typeMask, 'mean')
+    %     [mask, n_mask] = generate_mean_matrix(nMask);
+    % elseif strcmp(typeMask, 'gaussian')
+    %     sigma = input("Masukkan nilai standar deviasi: ");
+    %     [mask, n_mask] = generate_gaussian_matrix(nMask, sigma);
+    % else
+    %     fprintf("Invalid mask type!\n");
+    %     return;
+    % end
     
     pixel_border = floor(n_mask/2);   
     sum_mask = sum(mask(:));
@@ -30,12 +30,8 @@ function result_img = convolution(img, is_grayscaled, typeMask, nMask)
     fprintf("[INFO] An image size [%d, %d] is inputted!\n", row, col);
     
     % Create placeholder for new image
-    if (num_channels == 1 || is_grayscaled)
+    if (num_channels == 1)
         fprintf("[PROCESS] Processing grayscale image!\n");
-        if (num_channels ~= 1)
-            % If full colored but want to be grayscaled
-            img = rgb2gray(img);
-        end
         is_gray = true;
         result_img = zeros(row, col, 1, 'uint8');
     else

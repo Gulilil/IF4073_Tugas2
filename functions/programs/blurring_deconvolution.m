@@ -1,6 +1,6 @@
-function image_restored = blurring_deconvolution(img)
+function image_restored = blurring_deconvolution(img, len, theta)
     % Menjalankan fungsi untuk Motion Blurring
-    image_restored = motion_blur(img);
+    image_restored = motion_blur(img, len, theta);
 
     % % Menampilkan gambar sebelum dan sesudah Motion Bluring
     % subplot(1, 2, 1); imshow(img); title("Original Image");
