@@ -1,5 +1,6 @@
-function [image_result, fourierDisplay, meshArrays] =  image_smoothing_frequency(img, frequencyType, cutoffFrequency)
+function [image_result, fourierDisplay, meshArrays] =  image_smoothing_frequency(img, frequencyType, cutoffFrequency, n, gammaL, gammaH)
     % frequencyType = ['ILPF', 'GLPF', 'BLPF', 'IHPF', 'GHPF', 'BHPF', 'Homomorphic']
+    addpath('functions\utils');
 
     img = im2double(img); % Convert to double
     [M, N, numChannels] = size(img); % Get the size and number of channels of the original image
@@ -24,7 +25,7 @@ function [image_result, fourierDisplay, meshArrays] =  image_smoothing_frequency
     [fourierSpectrum, fourierDisplay] = fourier_transform(P, Q, numChannels, pad);
     
     % Step 3: Create an Filter based on condition
-    meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency);
+    meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency, n, gammaL, gammaH);
     
     % Step 4: Apply the filter to the Fourier-transformed image
     if numChannels == 1

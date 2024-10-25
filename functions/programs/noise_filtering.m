@@ -1,4 +1,11 @@
-function result_img = convolution(img, mask, n_mask)
+function [result_img, img_with_noise] = noise_filtering(img, noise_type, filter_type, density, mean, variance)
+    
+    if (noise_type == "Salt and Pepper")
+        img_with_noise = imnoise(img, 'salt & pepper', density);
+    else % noise_type == "Gaussian"
+        img_with_noise = imnoise(img, 'gaussian', mean, variance);
+    end
+
     [row, col, num_channels] = size(img);
     
     pixel_border = floor(n_mask/2);   
@@ -65,3 +72,4 @@ function result_img = convolution(img, mask, n_mask)
     end
     disp("[FINISHED] Finish processing!");
 end
+
