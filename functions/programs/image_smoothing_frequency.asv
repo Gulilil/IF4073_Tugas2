@@ -22,6 +22,7 @@ function [image_result, fourierDisplay, meshArrays] =  image_smoothing_frequency
     
     % Step 2: Perform the Fourier Transform on the padded image
     [fourierSpectrum, fourierDisplay] = fourier_transform(P, Q, numChannels, pad);
+    im
     
     % Step 3: Create an Filter based on condition
     meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency);
