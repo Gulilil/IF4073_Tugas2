@@ -22,7 +22,12 @@ function result_img = convolution(img, mask, n_mask)
                     rowResult(c) = 0;  % Set to black
                 else
                     local_mat = get_local_mat(img_channel, r, c, n_mask);
-                    conv_result = validate_pixel(round(dot_product(local_mat, mask) / sum_mask));
+                    if(sum_mask == 0)
+                        result_pixel = round(dot_product(local_mat, mask))
+                    else
+                        result_pixel = round(dot_product(local_mat, mask) / sum_mask)
+                    end
+                    conv_result = validate_pixel(result_pixel);
                     rowResult(c) = conv_result;
                 end
             end
