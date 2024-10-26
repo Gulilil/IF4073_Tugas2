@@ -12,24 +12,40 @@ function meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency, n,
     euclidean = sqrt(U.^2 + V.^2); % Perhitungan jarak dengan Euclidean distance dari center
 
     % Set mesh arrays tergantung pada kondisi dari tipe frekuensi
+    % ==================================
+    % For image smoothing
     if frequencyType == "ILPF"
         meshArrays = double(euclidean <= cutoffFrequency); % Ideal Lowpass Filter mask (1 inside cutoff, 0 outside)
     elseif frequencyType == "GLPF"
         meshArrays = exp(-(euclidean.^2) ./ (2 * (cutoffFrequency^2))); % Gaussian Lowpass Filter mask
     elseif frequencyType == "BLPF"
-        % n = 2; % Order of Butterworth filter
+        % n = Order of Butterworth filter
         meshArrays = 1 ./ (1 + (euclidean ./ cutoffFrequency).^(2 * n)); % Butterworth Lowpass Filter mask
+    % ==================================
+    % For edge detection
     elseif frequencyType == "IHPF"
         meshArrays = double(euclidean > cutoffFrequency); % Ideal Highpass Filter mask (1 outside cutoff, 0 inside)
     elseif frequencyType == "GHPF"
         meshArrays = 1 - exp(-(euclidean.^2) ./ (2 * (cutoffFrequency^2))); % Gaussian Highpass Filter mask
     elseif frequencyType == "BHPF"
-        n = 2; % Order of Butterworth filter
         meshArrays = 1 ./ (1 + (cutoffFrequency ./ euclidean).^(2 * n)); % Butterworth Highpass Filter mask
+    % ==================================
+    % For image brightening
     elseif frequencyType == "Homomorphic"
-        % gammaL = 2; % Lower gamma value
-        % gammaH = 4; % Higher gamma value
+        % n = Order of Butterworth filter
         meshArrays = (gammaH - gammaL) * (1 - exp(-(euclidean.^2) ./ (2 * (cutoffFrequency^2)))) + gammaL; % Homomorphic Filter mask
+    
+    % ==================================
+    % For periodic noise restoration
+    elseif frequencyType == "Bandreject"
+        D0 = 49;
+        W = 5;
+        n = 1;
+        meshArrays = 1./(1 + ((euclidean*W)./(euclidean.^2 - D0^2)).^(2*n));
+    elseif frequencyType == "Bandpass"
+
+    elseif frequencyType == "Notch"
+
     else
         fprintf("Invalid frequency type\n");
     end
