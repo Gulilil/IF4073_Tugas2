@@ -1,4 +1,4 @@
-function [result_img, meshArrays] = periodic_noise_restoration(img, filter_type, D0, W)
+function [result_img, meshArrays] = periodic_noise_restoration(img, filter_type, W, D0, D1)
 
 [M, N, n_channel] = size(img);
 
@@ -22,10 +22,12 @@ if filter_type == "Bandreject"
     meshArrays = fftshift(H);
 
 elseif filter_type == "Bandpass"
-    d0 = 20;  % Inner radius (low cutoff)
-    d1 = 50; % Outer radius (high cutoff)
     nx = M;
     ny = N;
+
+    f = uint8(img);
+    fftI = fft2(f,2*nx-1,2*ny-1);
+    fftI = fftshift(fftI);
 
     % Initialize filter.
     filter1 = ones(2*nx-1,2*ny-1);
@@ -36,14 +38,14 @@ elseif filter_type == "Bandpass"
         for j =1:2*ny-1
             dist = ((i-(nx+1))^2 + (j-(ny+1))^2)^.5;
             % Use Gaussian filter.
-            filter1(i,j) = exp(-dist^2/(2*d1^2));
-            filter2(i,j) = exp(-dist^2/(2*d0^2));
+            filter1(i,j) = exp(-dist^2/(2*D1^2));
+            filter2(i,j) = exp(-dist^2/(2*D0^2));
             filter3(i,j) = 1.0 - filter2(i,j);
             filter3(i,j) = filter1(i,j).*filter3(i,j);
         end
     end
     % Update image with passed frequencies
-    filtered_image = fourierSpectrum + filter3.*fourierSpectrum;
+    filtered_image = fftI + filter3.* fftI;
     filtered_image = ifftshift(filtered_image);
     filtered_image = ifft2(filtered_image,2*nx-1,2*ny-1);
     filtered_image = real(filtered_image(1:nx,1:ny));
@@ -53,7 +55,6 @@ elseif filter_type == "Bandpass"
 else% filter_type == "Notch"
 
     notch_centers = [M/2 + 30, N/2 + 40; M/2 - 30, N/2 - 40]; 
-    D0 = 10; % Radius of the notch filter
 
     % Initialize the notch filter with ones
     H = ones(M, N);
