@@ -34,18 +34,6 @@ function meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency, n,
     elseif frequencyType == "Homomorphic"
         % n = Order of Butterworth filter
         meshArrays = (gammaH - gammaL) * (1 - exp(-(euclidean.^2) ./ (2 * (cutoffFrequency^2)))) + gammaL; % Homomorphic Filter mask
-    
-    % ==================================
-    % For periodic noise restoration
-    elseif frequencyType == "Bandreject"
-        D0 = 49;
-        W = 5;
-        n = 1;
-        meshArrays = 1./(1 + ((euclidean*W)./(euclidean.^2 - D0^2)).^(2*n));
-    elseif frequencyType == "Bandpass"
-
-    elseif frequencyType == "Notch"
-
     else
         fprintf("Invalid frequency type\n");
     end

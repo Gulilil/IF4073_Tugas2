@@ -1,4 +1,4 @@
-function [image_result, fourierDisplay, meshArrays] =  image_smoothing_frequency(img, frequencyType, cutoffFrequency, n, gammaL, gammaH)
+function [image_result, meshArrays] =  image_smoothing_frequency(img, frequencyType, cutoffFrequency, n, gammaL, gammaH)
     % frequencyType = ['ILPF', 'GLPF', 'BLPF', 'IHPF', 'GHPF', 'BHPF', 'Homomorphic']
     addpath('functions\utils');
 
@@ -22,7 +22,7 @@ function [image_result, fourierDisplay, meshArrays] =  image_smoothing_frequency
     end
     
     % Step 2: Menjalankan fungsi Fourier Transform pada padded image
-    [fourierSpectrum, fourierDisplay] = fourier_transform(P, Q, numChannels, pad);
+    [fourierSpectrum, ~] = fourier_transform(P, Q, numChannels, pad);
     
     % Step 3: Memproses filter frekuensi berdasarkan kondisi pemilihan
     meshArrays = filter_processing(frequencyType, P, Q, cutoffFrequency, n, gammaL, gammaH);
