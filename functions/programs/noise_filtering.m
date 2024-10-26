@@ -13,15 +13,7 @@ function [result_img, img_with_noise] = noise_filtering(img, noise_type, filter_
     fprintf("[INFO] An image size [%d, %d] is inputted!\n", row, col);
     
     % Create placeholder for new image
-    if (num_channels == 1)
-        fprintf("[PROCESS] Processing grayscale image!\n");
-        is_gray = true;
-        result_img = zeros(row, col, num_channels, 'uint8');
-    else
-        fprintf("[PROCESS] Processing full color image!\n");
-        is_gray = false;
-        result_img = zeros(row, col, num_channels, 'uint8');
-    end
+    result_img = zeros(row, col, num_channels, 'uint8');
 
     % Create image
     for channel = 1: num_channels
