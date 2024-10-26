@@ -17,6 +17,6 @@ function imgMeanFiltered = image_smoothing_spatial(img, spatialType, nMask, sigm
             mask = generate_gaussian_matrix(nMask, sigma);
         end
 
-        imgMeanFiltered = convolution(double(imgWithNoise), mask, nMask);
+        imgMeanFiltered = convolution(double(img), mask, nMask);
     end
 end
